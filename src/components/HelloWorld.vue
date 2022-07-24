@@ -3,7 +3,9 @@
     <h1>{{ msg }}</h1>
     <div id="tutorial-one" v-cloak>
       {{greeting}}
-      <input v-model="greeting" />
+      <h4>TEXT PARROT</h4>
+      <p>text input will be duplicated above</p>
+      <input v-model="greeting" placeholder="type something..."/>
       <hr />
       <div class="tutorial-box1" v-if="isVisible1"></div>
       <div class="tutorial-box2" v-else-if="isVisible2"></div>
@@ -27,7 +29,7 @@ export default {
   name: 'HelloWorld',
   data: function () {
     return {
-      greeting: "Type Something",
+      greeting: "",
       isVisible1: false,
       isVisible2: false,
     };
@@ -40,6 +42,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+* {
+  margin: 0;
+}
+h1 {
+  margin: 25px;
+}
 h3 {
   margin: 40px 0 0;
 }
