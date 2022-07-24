@@ -5,11 +5,10 @@
       {{greeting}}
       <h4>TEXT PARROT</h4>
       <p>text input will be duplicated above</p>
-      <input v-model="greeting" placeholder="type something..."/>
+      <input @keyup.enter="greet(greeting + '!!!')" v-model="greeting" placeholder="type something..."/>
       <hr />
-      <div class="tutorial-box1" v-if="isVisible1"></div>
-      <div class="tutorial-box2" v-else-if="isVisible2"></div>
-      <div class="tutorial-box3" v-else></div>
+      <button @click="toggleBox">Toggle Box</button>
+      <div class="tutorial-box" v-if="isVisible"></div>
       <hr>
     </div>
     <p>
@@ -30,9 +29,17 @@ export default {
   data: function () {
     return {
       greeting: "",
-      isVisible1: false,
-      isVisible2: false,
+      isVisible: false,
     };
+  },
+  methods: {
+    toggleBox() {
+      this.isVisible = !this.isVisible
+      // Met this. kun je bij de isVisible: false
+    },
+    greet(greeting) {
+      console.log(greeting);
+    }
   },
   props: {
     msg: String
@@ -62,18 +69,8 @@ li {
 a {
   color: #42b983;
 }
-.tutorial-box1 {
+.tutorial-box {
   background-color: mediumseagreen;
-  height: 100px;
-  width: 100px;
-}
-.tutorial-box2 {
-  background-color: greenyellow;
-  height: 100px;
-  width: 100px;
-}
-.tutorial-box3 {
-  background-color: darkslategray;
   height: 100px;
   width: 100px;
 }
