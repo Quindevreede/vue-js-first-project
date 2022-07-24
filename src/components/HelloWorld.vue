@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <div id="tutorial-one" v-cloak>
-      {{greeting}}
+      <login-form />
       <h4>TEXT PARROT</h4>
       <p>text input will be duplicated above</p>
       <input @keyup.enter="greet(greeting + '!!!')" v-model="greeting" placeholder="type something..."/>
@@ -45,6 +45,74 @@ export default {
     msg: String
   }
 }
+app.component('login-form', {
+  template: `
+  <form @submit.prevent="handleSubmit">
+  <h1>{{ title }}</h1>
+<!--  <p v-for="(str, i) in inputs" v-bind:key="i">{{ str }}</p>-->
+  <custom-input
+      v-for="(input, i) in inputs"
+      v-bind:key="i"
+      v-model="input.value"
+      v-bind:label="input.label"
+      v-bind:type="input.type"/>
+  <button>LOG IN</button>
+  </form>
+  `,
+  components: ['custom-input'],
+  data() {
+    return {
+      title: 'Login Form',
+      inputs:[
+        {
+          label: 'Email',
+          value: '',
+          type: 'email'
+        },
+        {
+          label: 'Password',
+          value: '',
+          type: 'password'
+        }
+      ],
+      email: '',
+      password: '',
+      emailLabel: 'Email',
+      passwordLabel: 'Password'
+    }
+  },
+  methods: {
+    handleSubmit() {
+      console.log(this.inputs[0].value, this.inputs[1].value);
+    }
+  }
+})
+app.component('custom-input', {
+  template: `
+  <label>
+  {{ label }}
+  <input v-bind:type="type" v-model="inputValue">
+  </label>
+  `,
+  props: ['label', 'type', 'modelValue'],
+  computed: {
+    inputValue: {
+      get() {
+        return this.modelValue
+      },
+      set(value) {
+        console.log(value)
+        this.$emit('update:modelValue', value)
+      }
+
+    }
+  }
+  // data() {
+  //   return {
+  //     inputValue: ''
+  //   }
+  // }
+})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -76,5 +144,9 @@ a {
 }
 [v-cloak] {
   display: none;
+}
+input {
+  margin: 10px;
+  display: block;
 }
 </style>
